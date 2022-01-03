@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 class Program
 {
     public static void Main(string[] args)
     {
-        int[,] board = new int[7, 7];
-        board[5, 1] = 2;
-        Console.WriteLine(board[5, 1]);
+        Console.WriteLine("a");
+        Game game = new Game();
+        Console.WriteLine("b");
     }
 }

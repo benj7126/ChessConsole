@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess
+abstract class Piece
 {
-    abstract class Piece
-    {
-        char DisplayName = ' ';
+    char DisplayName = ' ';
 
-        public abstract int[] getMovement();
+    public abstract List<Vector> getMovement();
+    public abstract List<Vector> getAttack();
+
+    public void PieceOut()
+    {
+        Console.Write($"[{DisplayName}]");
     }
 }
