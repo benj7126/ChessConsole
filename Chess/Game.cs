@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Chess.Pieces;
+using Chess;
 
 internal class Game
 {
@@ -203,6 +204,9 @@ internal class Game
                 WriteBoard(markedPosition, selectedSpace, selectedPos.getMovement(selectedSpace, ref Board), selectedPos.getAttack(selectedSpace, ref Board));
             }
 
+            printList.Add("White is check: " + SomeSortOfFuncHolder.isCheck(Board, true));
+            printList.Add("Black is check: " + SomeSortOfFuncHolder.isCheck(Board, false));
+
             //print all from list so that i still have a console, it kinda messes with the board...
             foreach (string str in printList)
             {
@@ -294,6 +298,7 @@ internal class Game
 
     public void moveNUpdate(Piece selectedPos)
     {
+        selectedPos.hasMoved = true;
         Board[markedPosition.x, markedPosition.y] = selectedPos;
         if (markedPosition.y == 0 || markedPosition.y == 7 && selectedPos.DisplayName == 'P')
             Board[markedPosition.x, markedPosition.y] = new Queen(selectedPos.isWhite); // make this queen when queen is made...

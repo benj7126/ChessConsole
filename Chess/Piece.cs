@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 abstract class Piece
 {
     public bool isWhite = true;
+    public bool hasMoved = false;
     public char DisplayName = ' ';
 
     public abstract List<Vector> getMovement(Vector selfPos, ref Piece[,] board);

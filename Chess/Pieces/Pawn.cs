@@ -15,7 +15,10 @@ namespace Chess.Pieces
 
         public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board)
         {
-            return new List<Vector>() { new Vector(selfPos.x, selfPos.y + 1 * boolToNr(isWhite)) };
+            if (!hasMoved)
+                return new List<Vector>() { new Vector(selfPos.x, selfPos.y + 1 * boolToNr(isWhite)), new Vector(selfPos.x, selfPos.y + 2 * boolToNr(isWhite)) };
+            else
+                return new List<Vector>() { new Vector(selfPos.x, selfPos.y + 1 * boolToNr(isWhite)) };
         }
 
         public Pawn(bool color)
