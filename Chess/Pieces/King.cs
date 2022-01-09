@@ -8,7 +8,7 @@ namespace Chess.Pieces
 {
     internal class King : Piece
     {
-        public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
+        public List<Vector> actualAttack(Vector selfPos, ref Piece[,] board)
         {
             List<Vector> tosend = new List<Vector>();
 
@@ -29,7 +29,8 @@ namespace Chess.Pieces
 
             return tosend;
         }
-        public override List<Vector> fakeGetAttack(Vector selfPos, ref Piece[,] board)
+        
+        public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
         {
             List<Vector> tosend = new List<Vector>();
 
@@ -46,7 +47,7 @@ namespace Chess.Pieces
 
         public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board)
         {
-            return fakeGetAttack(selfPos, ref board);
+            return getAttack(selfPos, ref board);
         }
 
         public King(bool color)
