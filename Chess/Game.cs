@@ -204,8 +204,8 @@ internal class Game
                 WriteBoard(markedPosition, selectedSpace, selectedPos.getMovement(selectedSpace, ref Board), selectedPos.getAttack(selectedSpace, ref Board));
             }
 
-            printList.Add("White is check: " + SomeSortOfFuncHolder.isCheck(Board, true));
-            printList.Add("Black is check: " + SomeSortOfFuncHolder.isCheck(Board, false));
+            printList.Add("White is check: " + SomeSortOfFuncHolder.isCheck(Board, true) + " ");
+            printList.Add("Black is check: " + SomeSortOfFuncHolder.isCheck(Board, false) + " ");
 
             //print all from list so that i still have a console, it kinda messes with the board...
             foreach (string str in printList)
