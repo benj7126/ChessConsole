@@ -17,6 +17,8 @@ internal class Game
     public bool AiOn = true;
     public Dictionary<char, int> AiValues = new Dictionary<char, int>();
 
+    public bool colorALOT = false;
+
     public bool isWhiteTurn = true;
 
     public ConsoleKeyInfo up;
@@ -48,7 +50,7 @@ internal class Game
         AiValues.Add('Q', 5);
         AiValues.Add('K', 6);
     }
-
+    
     public void aiYN()
     {
         Console.Clear();
@@ -70,6 +72,32 @@ internal class Game
                 AiOn = false;
                 chosen = true;
                 Console.WriteLine("Playing local 1v1");
+            }
+        }
+
+
+        Console.WriteLine("Press any key to continue");
+        Console.ReadKey(true);
+        Console.Clear();
+    }
+    public void radientSidesYN()
+    {
+        Console.Clear();
+        Console.WriteLine("Should there be alot of color to recognize sides?");
+        Console.WriteLine("Answer in the form of y/n");
+        bool chosen = false;
+        while (!chosen)
+        {
+            ConsoleKey ck = Console.ReadKey(true).Key;
+            if (ck == ConsoleKey.Y)
+            {
+                colorALOT = true;
+                chosen = true;
+            }
+            else if (ck == ConsoleKey.N)
+            {
+                colorALOT = false;
+                chosen = true;
             }
         }
 
@@ -320,7 +348,14 @@ internal class Game
                         else
                         {
                             if (thisPiece.isWhite != isWhiteTurn)
-                                Console.ForegroundColor = ConsoleColor.Gray;
+                                if (colorALOT)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Cyan;
+                                }
+                                else
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Gray;
+                                }
                         }
 
                     }

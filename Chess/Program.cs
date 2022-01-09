@@ -12,6 +12,7 @@ class Program
         Game game = new Game();
         game.setKeys();
         game.aiYN();
+        game.radientSidesYN();
         game.BeginLoop();
     }
 }
