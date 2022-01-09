@@ -14,4 +14,31 @@ class Vector
         x = xIn;
         y = yIn;
     }
+
+    public override bool Equals(object? obj)
+    {
+        Vector v = obj as Vector;
+        if (v == null)
+            return false;
+        else
+            return x==v.x && y == v.y;
+    }
+
+    public bool findInList(List<Vector> checkVecs)
+    {
+        foreach (Vector vector in checkVecs)
+        {
+            if (x == vector.x && y == vector.y)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public override string ToString()
+    {
+        return x + "|" + y;
+    }
 }

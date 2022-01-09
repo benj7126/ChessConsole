@@ -6,21 +6,27 @@ using System.Threading.Tasks;
 
 namespace Chess.Pieces
 {
-    internal class Pawn : Piece
+    internal class King : Piece
     {
         public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
         {
-            return new List<Vector>() { new Vector(selfPos.x-1, selfPos.y + 1 * boolToNr(isWhite)), new Vector(selfPos.x+1, selfPos.y + 1 * boolToNr(isWhite)) };
+            List<Vector> tosend = new List<Vector>();
+
+            for (int i = -1; i < 2; i++)
+                for (int j = -1; j < 2; j++)
+                    tosend.Add(new Vector(selfPos.x + i, selfPos.y + j));
+
+            return tosend;
         }
 
         public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board)
         {
-            return new List<Vector>() { new Vector(selfPos.x, selfPos.y + 1 * boolToNr(isWhite)) };
+            return getAttack(selfPos, ref board);
         }
 
-        public Pawn(bool color)
+        public King(bool color)
         {
-            DisplayName = 'P';
+            DisplayName = 'K';
             isWhite = color; // true means that the piece is whte, otherewise its black
         }
     }

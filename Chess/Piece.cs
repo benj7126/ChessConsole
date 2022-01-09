@@ -6,10 +6,23 @@ using System.Threading.Tasks;
 
 abstract class Piece
 {
-    char DisplayName = ' ';
+    public bool isWhite = true;
+    public char DisplayName = ' ';
 
-    public abstract List<Vector> getMovement();
-    public abstract List<Vector> getAttack();
+    public abstract List<Vector> getMovement(Vector selfPos, ref Piece[,] board);
+    public abstract List<Vector> getAttack(Vector selfPos, ref Piece[,] board);
+
+    public int boolToNr(bool boolIn) // used to reverse y if piece is black
+    {
+        if (boolIn)
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 
     public void PieceOut()
     {

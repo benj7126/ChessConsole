@@ -8,8 +8,10 @@ class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("a");
+        Console.CursorVisible = false;
         Game game = new Game();
-        Console.WriteLine("b");
+        game.setKeys();
+        game.aiYN();
+        game.BeginLoop();
     }
 }
