@@ -300,7 +300,7 @@ internal class Game
     {
         selectedPos.hasMoved = true;
         Board[markedPosition.x, markedPosition.y] = selectedPos;
-        if (markedPosition.y == 0 || markedPosition.y == 7 && selectedPos.DisplayName == 'P')
+        if ((markedPosition.y == 0 || markedPosition.y == 7) && selectedPos.DisplayName == 'P')
             Board[markedPosition.x, markedPosition.y] = new Queen(selectedPos.isWhite); // make this queen when queen is made...
         Board[selectedSpace.x, selectedSpace.y] = new Empty();
         selectedSpace = new Vector(-1, -1);
@@ -310,7 +310,6 @@ internal class Game
 
     public void WriteBoard(Vector mP, Vector sP = null, List<Vector> movePos = null, List<Vector> attackPos = null)
     {
-
         movePos ??= new List<Vector>(); // makes it default to an empty list
         attackPos ??= new List<Vector>(); // same for this
         sP ??= new Vector(-1, -1); // same for this
