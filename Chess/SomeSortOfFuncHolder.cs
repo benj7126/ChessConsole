@@ -80,7 +80,14 @@ namespace Chess
 
             return attacks;
         }
-
+        public static bool isCheckmate(Piece[,] board, bool turn)
+        {
+            List<DoubleVector> moves = getAllMoves(board, turn);
+            if (moves.Count == 0)
+                return true;
+            else
+                return false;
+        }
         public static List<DoubleVector> getAllMoves(Piece[,] board, bool turn)
         {
             List<DoubleVector> moves = new List<DoubleVector>();
@@ -145,12 +152,7 @@ namespace Chess
 
             return moves;
         }
-
-        public static Piece[,] possibleSaves(Piece[,] theBoard, bool turn)
-        {
-
-        }
-
+        
         public static Piece[,] copyBoard(Piece[,] theBoard)
         {
             // so that simulating the board dosent affect the real board
