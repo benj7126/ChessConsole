@@ -134,6 +134,13 @@ internal class Game
         WriteBoard(new Vector(0, 0));
         while (gameActive)
         {
+            List<DoubleVector> dv = new List<DoubleVector>();
+
+            if (SomeSortOfFuncHolder.isCheck(Board, isWhiteTurn))
+            {
+                dv = SomeSortOfFuncHolder.getAllMoves(Board, isWhiteTurn);
+            }
+
             markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
             Console.CursorVisible = false;
             Console.SetCursorPosition(0, 0);
@@ -172,18 +179,36 @@ internal class Game
                     else
                     {
                         Piece selectedPos = Board[selectedSpace.x, selectedSpace.y];
-                        if (markedPosition.findInList(selectedPos.getMovement(selectedSpace, ref Board)))
+                        Piece markedPositionPos = Board[markedPosition.x, markedPosition.y];
+                        if (Board[markedPosition.x, markedPosition.y].DisplayName != ' ' && Board[markedPosition.x, markedPosition.y].isWhite == isWhiteTurn)
                         {
-                            moveNUpdate(selectedPos);
+                            selectedSpace = new Vector(markedPosition.x, markedPosition.y);
                         }
                         else if (markedPosition.findInList(selectedPos.getAttack(selectedSpace, ref Board)))
                         {
-                            moveNUpdate(selectedPos);
+                            if (markedPositionPos.DisplayName != ' ' && markedPositionPos.isWhite != isWhiteTurn)
+                                if (dv.Count == 0)
+                                {
+                                    if (new DoubleVector(selectedSpace.x, selectedSpace.y, markedPosition.x, markedPosition.y).findInList(dv))
+                                        moveNUpdate(selectedPos);
+                                }
+                                else
+                                {
+                                    moveNUpdate(selectedPos);
+                                }
                         }
-                        else
+                        else if (markedPosition.findInList(selectedPos.getMovement(selectedSpace, ref Board)))
                         {
-                            if (Board[markedPosition.x, markedPosition.y].DisplayName != ' ' && Board[markedPosition.x, markedPosition.y].isWhite == isWhiteTurn)
-                                selectedSpace = new Vector(markedPosition.x, markedPosition.y);
+                            if (markedPositionPos.DisplayName == ' ')
+                                if (dv.Count == 0)
+                                {
+                                    if (new DoubleVector(selectedSpace.x, selectedSpace.y, markedPosition.x, markedPosition.y).findInList(dv))
+                                        moveNUpdate(selectedPos);
+                                }
+                                else
+                                {
+                                    moveNUpdate(selectedPos);
+                                }
                         }
                     }
                 }
@@ -201,11 +226,21 @@ internal class Game
             else
             {
                 Piece selectedPos = Board[selectedSpace.x, selectedSpace.y];
-                WriteBoard(markedPosition, selectedSpace, selectedPos.getMovement(selectedSpace, ref Board), selectedPos.getAttack(selectedSpace, ref Board));
+                WriteBoard(markedPosition, sP: selectedSpace, movePos: selectedPos.getMovement(selectedSpace, ref Board), attackPos: selectedPos.getAttack(selectedSpace, ref Board), allowedMoves: dv);
             }
 
-            printList.Add("White is check: " + SomeSortOfFuncHolder.isCheck(Board, true) + " ");
-            printList.Add("Black is check: " + SomeSortOfFuncHolder.isCheck(Board, false) + " ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
+            printList.Add("                            ");
 
             //print all from list so that i still have a console, it kinda messes with the board...
             foreach (string str in printList)
@@ -308,11 +343,27 @@ internal class Game
         markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
     }
 
-    public void WriteBoard(Vector mP, Vector sP = null, List<Vector> movePos = null, List<Vector> attackPos = null)
+    public void WriteBoard(Vector mP, Vector sP = null, List<Vector> movePos = null, List<Vector> attackPos = null, List<DoubleVector> allowedMoves = null)
     {
+
         movePos ??= new List<Vector>(); // makes it default to an empty list
         attackPos ??= new List<Vector>(); // same for this
+        allowedMoves ??= new List<DoubleVector>(); // same for this
         sP ??= new Vector(-1, -1); // same for this
+
+        bool doAllowedMoves = false;
+
+        printList.Add("allowedMoves " + allowedMoves.Count);
+        if (allowedMoves.Count != 0)
+        {
+            printList.Add("DoAllowed");
+            doAllowedMoves = true;
+
+            foreach (DoubleVector dv in allowedMoves)
+            {
+                printList.Add("allowed: " + dv.x1 + "|" + dv.y1 + " " + dv.x2 + "|" + dv.y2);
+            }
+        }
 
         Piece selectedPiece = new Empty();
         if (selectedSpace.y != -1)
@@ -340,14 +391,40 @@ internal class Game
                     if (thisPiece.DisplayName == ' ')
                     {
                         if (thisPos.findInList(movePos))
-                            Console.ForegroundColor = ConsoleColor.Green;
+                        {
+                            if (doAllowedMoves)
+                            {
+                                if (new DoubleVector(x, y, sP.x, sP.y).findInList(allowedMoves))
+                                {
+                                    printList.Add("allowedM: " + x + y + sP.x + sP.y);
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                }
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                            }
+                        }
                     }
                     else
                     {
                         if (thisPos.findInList(attackPos))
                         {
                             if (selectedPiece.isWhite != thisPiece.isWhite)
-                                Console.ForegroundColor = ConsoleColor.Red;
+                            {
+                                if (doAllowedMoves)
+                                {
+                                    if (new DoubleVector(x, y, sP.x, sP.y).findInList(allowedMoves))
+                                    {
+                                        printList.Add("allowedA: " + x + y + sP.x + sP.y);
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                }
+                             }
                         }
                         else
                         {

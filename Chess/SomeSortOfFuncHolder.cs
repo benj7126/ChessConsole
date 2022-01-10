@@ -114,11 +114,14 @@ namespace Chess
                         {
                             if (-1 < v.x && v.x < 8 && -1 < v.y && v.y < 8)
                             {
-                                Piece[,] pieces = copyBoard(board);
-                                pieces[v.x, v.y] = pieces[x, y];
-                                pieces[x, y] = new Empty();
-                                if (!SomeSortOfFuncHolder.isCheck(pieces, turn))
-                                    moves.Add(new DoubleVector(v.x, v.y, x, y));
+                                if (board[v.x, v.y].DisplayName == ' ')
+                                {
+                                    Piece[,] pieces = copyBoard(board);
+                                    pieces[v.x, v.y] = pieces[x, y];
+                                    pieces[x, y] = new Empty();
+                                    if (!SomeSortOfFuncHolder.isCheck(pieces, turn))
+                                        moves.Add(new DoubleVector(v.x, v.y, x, y));
+                                }
                             }
                         }
 
@@ -144,11 +147,6 @@ namespace Chess
             }
 
             return moves;
-        }
-
-        public static Piece[,] possibleSaves(Piece[,] theBoard, bool turn)
-        {
-
         }
 
         public static Piece[,] copyBoard(Piece[,] theBoard)
