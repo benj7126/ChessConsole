@@ -13,9 +13,9 @@ namespace Chess
         {
             List<Vector> attacks = getAttacks(board, !turn);
 
-            for (int y = 0; y < 8; y++)
+            for (int y = 0; y < Math.Sqrt(board.Length); y++)
             {
-                for (int x = 0; x < 8; x++)
+                for (int x = 0; x < Math.Sqrt(board.Length); x++)
                 {
                     Piece thisPiece = board[x, y];
 
@@ -39,9 +39,9 @@ namespace Chess
         {
             List<Vector> attacks = new List<Vector>();
 
-            for (int y = 0; y < 8; y++)
+            for (int y = 0; y < Math.Sqrt(board.Length); y++)
             {
-                for (int x = 0; x < 8; x++)
+                for (int x = 0; x < Math.Sqrt(board.Length); x++)
                 {
                     Piece thisPiece = board[x, y];
                     Vector thisPos = new Vector(x, y);
@@ -63,7 +63,7 @@ namespace Chess
 
                         foreach (Vector v in demAttacks)
                         {
-                            if (-1 < v.x && v.x < 8 && -1 < v.y && v.y < 8)
+                            if (-1 < v.x && v.x < Math.Sqrt(board.Length) && -1 < v.y && v.y < Math.Sqrt(board.Length))
                             {
                                 if (board[v.x, v.y].DisplayName != ' ')
                                 {
@@ -92,9 +92,9 @@ namespace Chess
         {
             List<DoubleVector> moves = new List<DoubleVector>();
 
-            for (int y = 0; y < 8; y++)
+            for (int y = 0; y < Math.Sqrt(board.Length); y++)
             {
-                for (int x = 0; x < 8; x++)
+                for (int x = 0; x < Math.Sqrt(board.Length); x++)
                 {
                     Piece thisPiece = board[x, y];
                     Vector thisPos = new Vector(x, y);
@@ -119,7 +119,7 @@ namespace Chess
 
                         foreach (Vector v in demMoves)
                         {
-                            if (-1 < v.x && v.x < 8 && -1 < v.y && v.y < 8)
+                            if (-1 < v.x && v.x < Math.Sqrt(board.Length) && -1 < v.y && v.y < Math.Sqrt(board.Length))
                             {
                                 if (board[v.x, v.y].DisplayName == ' ')
                                 {
@@ -134,7 +134,7 @@ namespace Chess
 
                         foreach (Vector v in demAttacks)
                         {
-                            if (-1 < v.x && v.x < 8 && -1 < v.y && v.y < 8)
+                            if (-1 < v.x && v.x < Math.Sqrt(board.Length) && -1 < v.y && v.y < Math.Sqrt(board.Length))
                             {
                                 if (board[v.x, v.y].DisplayName != ' ')
                                 {
@@ -159,11 +159,11 @@ namespace Chess
         public static Piece[,] copyBoard(Piece[,] theBoard)
         {
             // so that simulating the board dosent affect the real board
-            Piece[,] newBoard = new Piece[8,8];
+            Piece[,] newBoard = new Piece[(int)Math.Sqrt(theBoard.Length), (int)Math.Sqrt(theBoard.Length)];
 
-            for (int y = 0; y < 8; y++)
+            for (int y = 0; y < Math.Sqrt(theBoard.Length); y++)
             {
-                for (int x = 0; x < 8; x++)
+                for (int x = 0; x < Math.Sqrt(theBoard.Length); x++)
                 {
                     newBoard[x, y] = theBoard[x, y];
                 }

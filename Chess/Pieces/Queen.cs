@@ -13,10 +13,10 @@ namespace Chess.Pieces
             List<Vector> tosend = new List<Vector>();
             for (int d = 0; d < 8; d++) // for all direction
             {
-                for (int m = 1; m < 8; m++) // for max movement
+                for (int m = 1; m < Math.Sqrt(board.Length); m++) // for max movement
                 {
                     Vector thisPos = posFromData(selfPos, d, m);
-                    if (-1 < thisPos.x && thisPos.x < 8 && -1 < thisPos.y && thisPos.y < 8)
+                    if (-1 < thisPos.x && thisPos.x < Math.Sqrt(board.Length) && -1 < thisPos.y && thisPos.y < Math.Sqrt(board.Length))
                     {
                         if (board[thisPos.x, thisPos.y].isWhite != isWhite || board[thisPos.x, thisPos.y].DisplayName == ' ')
                             tosend.Add(thisPos);

@@ -16,7 +16,7 @@ namespace Chess.Pieces
             {
                 for (int j = -1; j < 2; j++)
                 {
-                    if (-1 < selfPos.x + i && selfPos.x + i < 8 && -1 < selfPos.y + j && selfPos.y + j < 8)
+                    if (-1 < selfPos.x + i && selfPos.x + i < Math.Sqrt(board.Length) && -1 < selfPos.y + j && selfPos.y + j < Math.Sqrt(board.Length))
                     {
                         if (board[selfPos.x + i, selfPos.y + j].isWhite != isWhite || board[selfPos.x + i, selfPos.y + j].DisplayName == ' ')
                         {
@@ -41,7 +41,7 @@ namespace Chess.Pieces
             {
                 for (int j = -1; j < 2; j++)
                 {
-                    if (-1 < selfPos.x + i && selfPos.x + i < 8 && -1 < selfPos.y + j && selfPos.y + j < 8)
+                    if (-1 < selfPos.x + i && selfPos.x + i < Math.Sqrt(board.Length) && -1 < selfPos.y + j && selfPos.y + j < Math.Sqrt(board.Length))
                     {
                         if (board[selfPos.x + i, selfPos.y + j].isWhite != isWhite || board[selfPos.x + i, selfPos.y + j].DisplayName == ' ')
                             tosend.Add(new Vector(selfPos.x + i, selfPos.y + j));
