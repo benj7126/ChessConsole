@@ -35,18 +35,18 @@ internal class Game
     public Game()
     {
         Board = new Piece[,] {
-            { new Rook(true), new Pawn(true), new Empty(), new Joker(false), new Empty(), new Empty(), new Empty(), new Empty(), new Joker(true), new Empty(), new Pawn(false), new Rook(false)},
-            { new Knight(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Knight(false)},
+            { new Rook(true), new Pawn(true), new Empty(), new Jester(false), new Empty(), new Empty(), new Empty(), new Empty(), new Jester(true), new Empty(), new Pawn(false), new Rook(false)},
+            { new Knight(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(true), new Knight(false)},
             { new Bishop(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Bishop(false)},
             { new Queen(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Queen(false)},
+            { new Wizzard(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Wizzard(false)},
             { new Knight(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Knight(false)},
-            { new Rook(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Rook(false)},
-            { new Bishop(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Bishop(false)},
             { new Knight(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Knight(false)},
+            { new RoyalGuard(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new RoyalGuard(false)},
             { new King(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new King(false)},
             { new Bishop(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Bishop(false)},
             { new Knight(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Knight(false)},
-            { new Rook(true), new Pawn(true), new Empty(), new Joker(true), new Empty(), new Empty(), new Empty(), new Empty(), new Joker(false), new Empty(), new Pawn(false), new Rook(false)},
+            { new Rook(true), new Pawn(true), new Empty(), new Jester(true), new Empty(), new Empty(), new Empty(), new Empty(), new Jester(false), new Empty(), new Pawn(false), new Rook(false)},
         };
 
         AiValues.Add(' ', 0);
@@ -54,8 +54,10 @@ internal class Game
         AiValues.Add('B', 2);
         AiValues.Add('H', 3);
         AiValues.Add('R', 4);
-        AiValues.Add('Q', 5);
-        AiValues.Add('K', 6);
+        AiValues.Add('W', 5);
+        AiValues.Add('J', 6);
+        AiValues.Add('Q', 7);
+        AiValues.Add('K', 8);
     }
     
     public void aiYN()
@@ -346,7 +348,7 @@ internal class Game
     {
         selectedPos.hasMoved = true;
         Board[markedPosition.x, markedPosition.y] = selectedPos;
-        if ((markedPosition.y == 0 || markedPosition.y == 7) && selectedPos.DisplayName == 'P')
+        if ((markedPosition.y == 0 || markedPosition.y == boardSize.y-1) && selectedPos.DisplayName == 'P')
             Board[markedPosition.x, markedPosition.y] = new Queen(selectedPos.isWhite); // make this queen when queen is made...
         Board[selectedSpace.x, selectedSpace.y] = new Empty();
         selectedSpace = new Vector(-1, -1);
