@@ -17,6 +17,8 @@ internal class Game
 
     public Vector boardSize = new Vector(12, 12);
 
+    public int TurnsTillSwap = 2;
+
     public bool AiOn = true;
     public Dictionary<char, int> AiValues = new Dictionary<char, int>();
 
@@ -24,11 +26,16 @@ internal class Game
 
     public bool isWhiteTurn = true;
 
-    public ConsoleKeyInfo up;
-    public ConsoleKeyInfo down;
-    public ConsoleKeyInfo left;
-    public ConsoleKeyInfo right;
-    public ConsoleKeyInfo select;
+    public ConsoleKeyInfo up1;
+    public ConsoleKeyInfo down1;
+    public ConsoleKeyInfo left1;
+    public ConsoleKeyInfo right1;
+    public ConsoleKeyInfo select1;
+    public ConsoleKeyInfo up2;
+    public ConsoleKeyInfo down2;
+    public ConsoleKeyInfo left2;
+    public ConsoleKeyInfo right2;
+    public ConsoleKeyInfo select2;
 
     private List<string> printList = new List<string>();
 
@@ -36,7 +43,7 @@ internal class Game
     {
         Board = new Piece[,] {
             { new Rook(true), new Pawn(true), new Empty(), new Jester(false), new Empty(), new Empty(), new Empty(), new Empty(), new Jester(true), new Empty(), new Pawn(false), new Rook(false)},
-            { new Knight(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(true), new Knight(false)},
+            { new Knight(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Knight(false)},
             { new Bishop(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Bishop(false)},
             { new Queen(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Queen(false)},
             { new Wizzard(true), new Pawn(true), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Pawn(false), new Wizzard(false)},
@@ -121,15 +128,20 @@ internal class Game
         Console.WriteLine("Keybinding phase");
 
         Console.Write("Up key - ");
-        up = Console.ReadKey(true); Console.WriteLine(up.Key);
+        up1 = Console.ReadKey(true); Console.WriteLine(up1.Key);
+        up2 = Console.ReadKey(true); Console.WriteLine(up2.Key);
         Console.Write("Down key - ");
-        down = Console.ReadKey(true); Console.WriteLine(down.Key);
+        down1 = Console.ReadKey(true); Console.WriteLine(down1.Key);
+        down2 = Console.ReadKey(true); Console.WriteLine(down2.Key);
         Console.Write("Left key - ");
-        left = Console.ReadKey(true); Console.WriteLine(left.Key);
+        left1 = Console.ReadKey(true); Console.WriteLine(left1.Key);
+        left2 = Console.ReadKey(true); Console.WriteLine(left2.Key);
         Console.Write("Right key - ");
-        right = Console.ReadKey(true); Console.WriteLine(right.Key);
+        right1 = Console.ReadKey(true); Console.WriteLine(right1.Key);
+        right2 = Console.ReadKey(true); Console.WriteLine(right2.Key);
         Console.Write("Select key - ");
-        select = Console.ReadKey(true); Console.WriteLine(select.Key);
+        select1 = Console.ReadKey(true); Console.WriteLine(select1.Key);
+        select2 = Console.ReadKey(true); Console.WriteLine(select2.Key);
 
         Console.WriteLine("Press any key to continue");
         Console.ReadKey(true);
@@ -148,6 +160,12 @@ internal class Game
             {
                 dv = SomeSortOfFuncHolder.getAllMoves(Board, isWhiteTurn);
             }
+
+            ConsoleKeyInfo up = isWhiteTurn == true ? up1 : up2;
+            ConsoleKeyInfo down = isWhiteTurn == true ? down1 : down2;
+            ConsoleKeyInfo left = isWhiteTurn == true ? left1 : left2;
+            ConsoleKeyInfo right = isWhiteTurn == true ? right1 : right2;
+             ConsoleKeyInfo select = isWhiteTurn == true ? select1 : select2;
 
             markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
             Console.CursorVisible = false;
@@ -330,8 +348,13 @@ internal class Game
             int chosenMove = rnd.Next(canMove.Count - 1);
             Board[canMove[chosenMove].x, canMove[chosenMove].y] = Board[canMoveOrig[chosenMove].x, canMoveOrig[chosenMove].y];
             Board[canMoveOrig[chosenMove].x, canMoveOrig[chosenMove].y] = new Empty();
-            isWhiteTurn = !isWhiteTurn;
-            markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
+            TurnsTillSwap = TurnsTillSwap - 1;
+            if (TurnsTillSwap == 0)
+            {
+                TurnsTillSwap = 2;
+                isWhiteTurn = !isWhiteTurn;
+                markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
+            }
         }
         else
         {
@@ -339,8 +362,13 @@ internal class Game
             int chosenMove = rnd.Next(dv.Count - 1);
             Board[dv[chosenMove].x1, dv[chosenMove].y1] = Board[dv[chosenMove].x2, dv[chosenMove].y2];
             Board[dv[chosenMove].x2, dv[chosenMove].y2] = new Empty();
-            isWhiteTurn = !isWhiteTurn;
-            markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
+            TurnsTillSwap = TurnsTillSwap - 1;
+            if (TurnsTillSwap == 0)
+            {
+                TurnsTillSwap = 2;
+                isWhiteTurn = !isWhiteTurn;
+                markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
+            }
         }
     }
 
@@ -352,8 +380,13 @@ internal class Game
             Board[markedPosition.x, markedPosition.y] = new Queen(selectedPos.isWhite); // make this queen when queen is made...
         Board[selectedSpace.x, selectedSpace.y] = new Empty();
         selectedSpace = new Vector(-1, -1);
-        isWhiteTurn = !isWhiteTurn;
-        markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
+        TurnsTillSwap = TurnsTillSwap - 1;
+        if (TurnsTillSwap == 0)
+        {
+            TurnsTillSwap = 2;
+            isWhiteTurn = !isWhiteTurn;
+            markedPosition = isWhiteTurn == true ? markedPosition1 : markedPosition2;
+        }
     }
 
     public void WriteBoard(Vector mP, Vector sP = null, List<Vector> movePos = null, List<Vector> attackPos = null, List<DoubleVector> allowedMoves = null)
