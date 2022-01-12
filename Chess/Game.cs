@@ -65,6 +65,7 @@ internal class Game
         AiValues.Add('J', 6);
         AiValues.Add('Q', 7);
         AiValues.Add('K', 8);
+        AiValues.Add('G', 9);
     }
     
     public void aiYN()
