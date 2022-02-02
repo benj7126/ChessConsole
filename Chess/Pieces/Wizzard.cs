@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chess.Pieces
 {
-    internal class Wizzard : Piece
+    class Wizzard : Piece
     {
         public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
         {

@@ -7,26 +7,26 @@ using Chess.Pieces;
 
 namespace Chess
 {
-    internal class SomeSortOfFuncHolder
+    class SomeSortOfFuncHolder
     {
-        public static bool isCheck(Piece[,] board, bool turn)
+        public static bool isCheck(Piece[,] board, bool turn) // check if a side is in check
         {
-            List<Vector> attacks = getAttacks(board, !turn);
+            List<Vector> attacks = getAttacks(board, !turn); // get all attacks of the board
 
             for (int y = 0; y < Math.Sqrt(board.Length); y++)
             {
-                for (int x = 0; x < Math.Sqrt(board.Length); x++)
+                for (int x = 0; x < Math.Sqrt(board.Length); x++) // for all pieces to find the king
                 {
                     Piece thisPiece = board[x, y];
 
                     Vector thisPos = new Vector(x, y);
 
 
-                    if (thisPiece.DisplayName == 'K' && thisPiece.isWhite == turn)
+                    if (thisPiece.DisplayName == 'K' && thisPiece.isWhite == turn) // if it is the king of this piece
                     {
-                        if (thisPos.findInList(attacks))
+                        if (thisPos.findInList(attacks)) // if this piece can get attackd
                         {
-                            return true;
+                            return true; // true
                         }
                     }
                 }
@@ -35,18 +35,19 @@ namespace Chess
             return false;
         }
 
-        public static List<Vector> getAttacks(Piece[,] board, bool turn)
+        public static List<Vector> getAttacks(Piece[,] board, bool turn) // get all possible attack
         {
-            List<Vector> attacks = new List<Vector>();
+            List<Vector> attacks = new List<Vector>(); // prepeare attack list
 
             for (int y = 0; y < Math.Sqrt(board.Length); y++)
             {
-                for (int x = 0; x < Math.Sqrt(board.Length); x++)
+                for (int x = 0; x < Math.Sqrt(board.Length); x++) // go thru all pieces on board
                 {
+                    // save this piece
                     Piece thisPiece = board[x, y];
                     Vector thisPos = new Vector(x, y);
 
-                    if (thisPiece.isWhite == turn)
+                    if (thisPiece.isWhite == turn) // if this pice is the same color as current turn
                     {
 
                         List<Vector> demAttacks = new List<Vector>();

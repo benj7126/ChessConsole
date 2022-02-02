@@ -6,34 +6,26 @@ using System.Threading.Tasks;
 
 namespace Chess.Pieces
 {
-    internal class Jester : Piece
+    class Jester : Piece
     {
-        public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
+        public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board) // get possible attacks
         {
-            List<Vector> tosend = new List<Vector>();
+            List<Vector> tosend = new List<Vector>(); // define a list for possible moves
 
-            for (int i = -2; i < 3; i++)
-            {
-                for (int j = -2; j < 3; j++)
-                {
-                    if (-1 < selfPos.x + i && selfPos.x + i < Math.Sqrt(board.Length) && -1 < selfPos.y + j && selfPos.y + j < Math.Sqrt(board.Length))
-                    {
-                        if ((board[selfPos.x + i, selfPos.y + j].isWhite != isWhite || board[selfPos.x + i, selfPos.y + j].DisplayName == ' ')
-                            && ((i < -1 || i > 1) && (j < -1 || j > 1)))
-                            tosend.Add(new Vector(selfPos.x + i, selfPos.y + j));
-                    }
-                }
-            }
+            tosend.Add(new Vector(selfPos.x + 2, selfPos.y + 2)); // add positions
+            tosend.Add(new Vector(selfPos.x + 2, selfPos.y - 2));
+            tosend.Add(new Vector(selfPos.x - 2, selfPos.y - 2));
+            tosend.Add(new Vector(selfPos.x - 2, selfPos.y + 2));
 
             return tosend;
         }
 
         public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board)
         {
-            return getAttack(selfPos, ref board);
+            return getAttack(selfPos, ref board); // the same movement as attack
         }
 
-        public Jester(bool color)
+        public Jester(bool color) // define piece
         {
             DisplayName = 'J';
             isWhite = color; // true means that the piece is whte, otherewise its black

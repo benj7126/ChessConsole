@@ -6,35 +6,35 @@ using System.Threading.Tasks;
 
 namespace Chess.Pieces
 {
-    internal class Queen : Piece
+    class Queen : Piece // the queen
     {
-        public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
+        public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board) // attack
         {
             List<Vector> tosend = new List<Vector>();
             for (int d = 0; d < 8; d++) // for all direction
             {
                 for (int m = 1; m < Math.Sqrt(board.Length); m++) // for max movement
                 {
-                    Vector thisPos = posFromData(selfPos, d, m);
+                    Vector thisPos = posFromData(selfPos, d, m); // get the position of given m and d
                     if (-1 < thisPos.x && thisPos.x < Math.Sqrt(board.Length) && -1 < thisPos.y && thisPos.y < Math.Sqrt(board.Length))
                     {
                         if (board[thisPos.x, thisPos.y].isWhite != isWhite || board[thisPos.x, thisPos.y].DisplayName == ' ')
-                            tosend.Add(thisPos);
+                            tosend.Add(thisPos); // if the piece is blank or not the same color as this add it to attack
 
                         if (board[thisPos.x, thisPos.y].DisplayName != ' ')
-                            break;
+                            break; // if the piece is not empty
                     }
                 }
             }
             return tosend;
         }
 
-        public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board)
+        public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board) // get movement
         {
-            return getAttack(selfPos, ref board);
+            return getAttack(selfPos, ref board); // same as attack
         }
 
-        private Vector posFromData(Vector selfPos, int d, int m)
+        private Vector posFromData(Vector selfPos, int d, int m) // takes a direction and a distance m and gives a possition based on current position
         {
             if (d == 0)
             {
@@ -70,7 +70,7 @@ namespace Chess.Pieces
             }
         }
 
-        public Queen(bool color)
+        public Queen(bool color) // on definition
         {
             DisplayName = 'Q';
             isWhite = color; // true means that the piece is whte, otherewise its black

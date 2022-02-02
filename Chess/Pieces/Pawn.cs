@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Chess.Pieces
 {
-    internal class Pawn : Piece
+    class Pawn : Piece
     {
-        public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
+        public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board) // it can attack like a pawn
         {
             return new List<Vector>() { new Vector(selfPos.x-1, selfPos.y + boolToNr(isWhite)), new Vector(selfPos.x+1, selfPos.y + 1 * boolToNr(isWhite)) };
         }
 
-        public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board)
+        public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board) // it can move 1 forward, based on its color
         {
             if (board[selfPos.x, selfPos.y+boolToNr(isWhite)].DisplayName != ' ')
-                return new List<Vector>() { new Vector(selfPos.x, selfPos.y + boolToNr(isWhite)) };
+                return new List<Vector>() { new Vector(selfPos.x, selfPos.y + boolToNr(isWhite)) }; // bool to nr returns what the bool is in a nuber
 
-            if (!hasMoved)
+            if (!hasMoved) // a variable made for this and only used by this...
                 return new List<Vector>() { new Vector(selfPos.x, selfPos.y + boolToNr(isWhite)), new Vector(selfPos.x, selfPos.y + 2 * boolToNr(isWhite)) };
             else
                 return new List<Vector>() { new Vector(selfPos.x, selfPos.y + boolToNr(isWhite)) };

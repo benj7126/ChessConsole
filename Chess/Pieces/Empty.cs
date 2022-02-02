@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Chess.Pieces
 {
-    internal class Empty : Piece
+    class Empty : Piece
     {
         public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
         {
-            List<Vector> tosend = new List<Vector>();
+            List<Vector> tosend = new List<Vector>(); // dosent have any attacks
             return tosend;
         }
 
         public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board)
         {
-            List<Vector> tosend = new List<Vector>();
+            List<Vector> tosend = new List<Vector>(); // doset have any movement
             return tosend;
         }
     }
