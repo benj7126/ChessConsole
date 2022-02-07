@@ -59,10 +59,11 @@ namespace Chess
                         }
                         else
                         {
+                            // if the piece is not a king. Just get normal attack
                             demAttacks = thisPiece.getAttack(thisPos, ref board);
                         }
 
-                        foreach (Vector v in demAttacks)
+                        foreach (Vector v in demAttacks) // add all the legal attacks to the list of attacks
                         {
                             if (-1 < v.x && v.x < Math.Sqrt(board.Length) && -1 < v.y && v.y < Math.Sqrt(board.Length))
                             {
@@ -79,30 +80,33 @@ namespace Chess
                 }
             }
 
-            return attacks;
+            return attacks; // return them
         }
-        public static bool isCheckmate(Piece[,] board, bool turn)
+        public static bool isCheckmate(Piece[,] board, bool turn) 
         {
+            // if there are no possible moves, you are checkmated
             List<DoubleVector> moves = getAllMoves(board, turn);
             if (moves.Count == 0)
                 return true;
             else
                 return false;
         }
-        public static List<DoubleVector> getAllMoves(Piece[,] board, bool turn)
+        public static List<DoubleVector> getAllMoves(Piece[,] board, bool turn) // list of all LEGAL moves
         {
-            List<DoubleVector> moves = new List<DoubleVector>();
+            List<DoubleVector> moves = new List<DoubleVector>(); // prepare a 'double vector' a vector that looks like {x1=?, y1=?,x2=?,y2=?}
+            // it holds attacks, that say, from point 1 to point 2
 
             for (int y = 0; y < Math.Sqrt(board.Length); y++)
             {
                 for (int x = 0; x < Math.Sqrt(board.Length); x++)
                 {
+                    // go thru the board, and all pieces
                     Piece thisPiece = board[x, y];
                     Vector thisPos = new Vector(x, y);
 
-                    if (thisPiece.isWhite == turn)
+                    if (thisPiece.isWhite == turn) // if this piecs can be moved by the player who asked for all moves
                     {
-
+                        // create lists of attacks and moves
                         List<Vector> demMoves = new List<Vector>();
                         List<Vector> demAttacks = new List<Vector>();
                         if (thisPiece.DisplayName == 'K')
@@ -116,9 +120,10 @@ namespace Chess
                         {
                             demMoves = thisPiece.getMovement(thisPos, ref board);
                             demAttacks = thisPiece.getAttack(thisPos, ref board);
+                            // add attacks and moves to ther respective list
                         }
 
-                        foreach (Vector v in demMoves)
+                        foreach (Vector v in demMoves) // add moves to double vector, if legal
                         {
                             if (-1 < v.x && v.x < Math.Sqrt(board.Length) && -1 < v.y && v.y < Math.Sqrt(board.Length))
                             {
@@ -133,7 +138,7 @@ namespace Chess
                             }
                         }
 
-                        foreach (Vector v in demAttacks)
+                        foreach (Vector v in demAttacks) // add attacks to double vector, if legal
                         {
                             if (-1 < v.x && v.x < Math.Sqrt(board.Length) && -1 < v.y && v.y < Math.Sqrt(board.Length))
                             {
@@ -154,10 +159,10 @@ namespace Chess
                 }
             }
 
-            return moves;
+            return moves; // return double vector
         }
 
-        public static Piece[,] copyBoard(Piece[,] theBoard)
+        public static Piece[,] copyBoard(Piece[,] theBoard) // just a shallow copy of board
         {
             // so that simulating the board dosent affect the real board
             Piece[,] newBoard = new Piece[(int)Math.Sqrt(theBoard.Length), (int)Math.Sqrt(theBoard.Length)];

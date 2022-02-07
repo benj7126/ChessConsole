@@ -10,13 +10,15 @@ namespace Chess.Pieces
     {
         public override List<Vector> getAttack(Vector selfPos, ref Piece[,] board)
         {
-            List<Vector> tosend = new List<Vector>();
+            List<Vector> tosend = new List<Vector>(); // it cant attack
 
             return tosend;
         }
 
         public override List<Vector> getMovement(Vector selfPos, ref Piece[,] board)
         {
+            // return all empty tiles
+
             List<Vector> tosend = new List<Vector>();
 
             for (int i = 0; i < Math.Sqrt(board.Length); i++)

@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 class Vector
 {
+    //x n y
     public int x;
     public int y;
 
-    public Vector(int xIn, int yIn)
+    public Vector(int xIn, int yIn) // define it
     {
         x = xIn;
         y = yIn;
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals(object? obj) // i dont know how to make == work for it, so we using this instead
     {
         Vector v = obj as Vector;
         if (v == null)
@@ -24,7 +25,7 @@ class Vector
             return x==v.x && y == v.y;
     }
 
-    public bool findInList(List<Vector> checkVecs)
+    public bool findInList(List<Vector> checkVecs) // find this in a list of vectors
     {
         foreach (Vector vector in checkVecs)
         {
@@ -37,7 +38,7 @@ class Vector
         return false;
     }
 
-    public override string ToString()
+    public override string ToString() // if i need to represent it
     {
         return x + "|" + y;
     }
